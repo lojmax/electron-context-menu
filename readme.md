@@ -131,3 +131,27 @@ shouldShowMenu: (event, params) => !params.isEditable
 ## License
 
 MIT © [Sindre Sorhus](https://sindresorhus.com)
+
+
+## Additions by LojMax
+
+#### showCutCopyPaste
+
+Type: `boolean`<br>
+Default: `false`
+
+Show the `Cut`, `Copy` & `Paste` menu items when right-clicking.
+
+#### showSaveImage
+
+Type: `boolean`<br>
+Default: `false`
+
+Show the `Save Image` menu item when right-clicking on image.
+
+#### showCopyLink
+
+Type: `boolean`<br>
+Default: `false`
+
+Show the `Copy Link` menu item when right-clicking on image.

@@ -14,34 +14,38 @@ function create(win, options) {
 		const {editFlags} = props;
 		const hasText = props.selectionText.trim().length > 0;
 		const can = type => editFlags[`can${type}`] && hasText;
+    let menuTpl = [];
 
-		let menuTpl = [{
-			type: 'separator'
-		}, {
-			id: 'cut',
-			label: 'Cut',
-			// Needed because of macOS limitation:
-			// https://github.com/electron/electron/issues/5860
-			role: can('Cut') ? 'cut' : '',
-			enabled: can('Cut'),
-			visible: props.isEditable
-		}, {
-			id: 'copy',
-			label: 'Copy',
-			role: can('Copy') ? 'copy' : '',
-			enabled: can('Copy'),
-			visible: props.isEditable || hasText
-		}, {
-			id: 'paste',
-			label: 'Paste',
-			role: editFlags.canPaste ? 'paste' : '',
-			enabled: editFlags.canPaste,
-			visible: props.isEditable
-		}, {
-			type: 'separator'
-		}];
 
-		if (props.mediaType === 'image') {
+    if (options.showCutCopyPaste) {
+      menuTpl = [{
+        type: 'separator'
+      }, {
+        id: 'cut',
+        label: 'Cut',
+        // Needed because of macOS limitation:
+        // https://github.com/electron/electron/issues/5860
+        role: can('Cut') ? 'cut' : '',
+        enabled: can('Cut'),
+        visible: props.isEditable
+      }, {
+        id: 'copy',
+        label: 'Copy',
+        role: can('Copy') ? 'copy' : '',
+        enabled: can('Copy'),
+        visible: props.isEditable || hasText
+      }, {
+        id: 'paste',
+        label: 'Paste',
+        role: editFlags.canPaste ? 'paste' : '',
+        enabled: editFlags.canPaste,
+        visible: props.isEditable
+      }, {
+        type: 'separator'
+      }];
+    }
+
+		if (options.showSaveImage && props.mediaType === 'image') {
 			menuTpl = [{
 				type: 'separator'
 			}, {
@@ -55,7 +59,7 @@ function create(win, options) {
 			}];
 		}
 
-		if (props.linkURL && props.mediaType === 'none') {
+		if (options.showCopyLink && props.linkURL && props.mediaType === 'none') {
 			menuTpl = [{
 				type: 'separator'
 			}, {
